@@ -21,17 +21,17 @@ public class ClockAnimation : MonoBehaviour
         if (runSecond)
         {
             currentSecond = ((currentDate.Second / degreesInSecond) * 360f);
-            secondTransform.transform.Rotate(0f, 0f, -currentSecond, Space.Self);
+            secondTransform.Rotate(0f, 0f, -currentSecond, Space.Self);
         }
         if (runMinute)
         {
             currentMinute = ((currentDate.Minute / degreesInMinute) * 360f) + currentSecond / 60f;
-            minuteTransform.transform.Rotate(0f, 0f, -currentMinute, Space.Self);
+            minuteTransform.Rotate(0f, 0f, -currentMinute, Space.Self);
         }
         if (runHour)
         {
             currentHour = ((currentDate.Hour / degreesInHour) * 360f) + currentMinute / 60f + currentSecond/60f;
-            hourTransform.transform.Rotate(0f, 0f, -currentHour, Space.Self);
+            hourTransform.Rotate(0f, 0f, -currentHour, Space.Self);
         }
         InvokeRepeating("clockTicking", 1f, 1f); // Invoke Repeat clockTicking Method Every Second
     }
@@ -40,7 +40,7 @@ public class ClockAnimation : MonoBehaviour
     {
         currentDate = DateTime.Now;
         Debug.Log(currentDate);
-
+      
         if (runSecond)
         {
             currentSecond = ((currentDate.Second / degreesInSecond) * 360f);
@@ -49,30 +49,30 @@ public class ClockAnimation : MonoBehaviour
                 StartCoroutine(LerpFunction(Quaternion.Euler(0f, 0f, -currentSecond), 1));
             }
             else
-            { secondTransform.transform.rotation = Quaternion.Euler(0f, 0f, -currentSecond); }
+            { secondTransform.rotation = Quaternion.Euler(0f, 0f, -currentSecond); }
         }
         if (runMinute)
         {
             currentMinute = ((currentDate.Minute / degreesInMinute) * 360f) + currentSecond / 60f;
-            minuteTransform.transform.rotation = Quaternion.Euler(0f, 0f, -currentMinute);
+            minuteTransform.rotation = Quaternion.Euler(0f, 0f, -currentMinute);
         }
         if (runHour)
         {
             currentHour = ((currentDate.Hour / degreesInHour) * 360f) + currentMinute / 60f;
-            hourTransform.transform.rotation = Quaternion.Euler(0f, 0f, -currentHour);
+            hourTransform.rotation = Quaternion.Euler(0f, 0f, -currentHour);
         }
     }
     IEnumerator LerpFunction(Quaternion endValue, float duration)  // Coroutine For Smooth Movement Of Seconds Hand
     {
         float time = 0;
-        Quaternion startValue = secondTransform.transform.rotation;
+        Quaternion startValue = secondTransform.rotation;
 
         while (time < duration)
         {
-            secondTransform.transform.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            secondTransform.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
-        secondTransform.transform.rotation = endValue;
+        secondTransform.rotation = endValue;
     }
 }
